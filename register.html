@@ -11,6 +11,43 @@
       emailjs.init("gV773-VG85THpxrNV"); 
     })();
   </script>
+     <style>
+    body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #003366, #0055a5);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Yellow accent circles */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: #ffcc00;
+  opacity: 0.15;
+}
+
+body::before {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+}
+
+body::after {
+  width: 200px;
+  height: 200px;
+  bottom: -80px;
+  right: -80px;
+}
+</style>
 </head>
 <body class="bg-gradient-to-r from-blue-50 to-blue-100 font-sans">
   <!-- Page Wrapper -->
@@ -156,6 +193,7 @@
   </script>
 </body>
 </html>
+
 
 
 
