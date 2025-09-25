@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Dashboard - Airtime & Data Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="favicon.ico" />
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">Airtime<span class="text-gray-900">&Data</span></h1>
+      <nav class="hidden md:flex space-x-8">
+        <a href="dashboard.html" class="text-blue-600 font-semibold">Dashboard</a>
+        <a href="transactions.html" class="hover:text-blue-600">Transactions</a>
+        <a href="profile.html" class="hover:text-blue-600">Profile</a>
+        <a href="support.html" class="hover:text-blue-600">Support</a>
+      </nav>
+      <div>
+        <a href="logout.html" class="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <h2 class="text-3xl font-bold mb-6">Welcome back, User 👋</h2>
+
+    <!-- Balance Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <h3 class="text-gray-500">Airtime Balance</h3>
+        <p class="text-2xl font-bold text-blue-600">GHS 5</p>
+        <a href="recharge.html" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Recharge</a>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <h3 class="text-gray-500">Data Balance</h3>
+        <p class="text-2xl font-bold text-green-600">10.0 GB</p>
+        <a href="buy-data.html" class="mt-4 inline-block px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Buy Data</a>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <h3 class="text-gray-500">Rewards</h3>
+        <p class="text-2xl font-bold text-yellow-600">120 Points</p>
+        <a href="rewards.html" class="mt-4 inline-block px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">Redeem</a>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white p-8 rounded-xl shadow mb-10">
+      <h3 class="text-xl font-semibold mb-6">Quick Actions</h3>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <a href="recharge.html" class="p-6 border rounded-lg hover:shadow text-center">
+          <p class="font-semibold text-blue-600">Recharge Airtime</p>
+        </a>
+        <a href="buy-data.html" class="p-6 border rounded-lg hover:shadow text-center">
+          <p class="font-semibold text-green-600">Buy Data</p>
+        </a>
+        <a href="transfer.html" class="p-6 border rounded-lg hover:shadow text-center">
+          <p class="font-semibold text-purple-600">Transfer Airtime</p>
+        </a>
+        <a href="transactions.html" class="p-6 border rounded-lg hover:shadow text-center">
+          <p class="font-semibold text-gray-600">View Transactions</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="bg-white p-8 rounded-xl shadow">
+      <h3 class="text-xl font-semibold mb-6">Recent Transactions</h3>
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b">
+            <th class="py-3 px-4">Date</th>
+            <th class="py-3 px-4">Type</th>
+            <th class="py-3 px-4">Amount</th>
+            <th class="py-3 px-4">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b">
+            <td class="py-3 px-4">Sept 25, 2025</td>
+            <td class="py-3 px-4">Airtime Recharge</td>
+            <td class="py-3 px-4">GHS 0</td>
+            <td class="py-3 px-4 text-green-600">Success</td>
+          </tr>
+          <tr class="border-b">
+            <td class="py-3 px-4">Sept 25, 2025</td>
+            <td class="py-3 px-4">Data Purchase</td>
+            <td class="py-3 px-4">GHS 0</td>
+            <td class="py-3 px-4 text-green-600">Success</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <p>&copy; 2025 Airtime & Data Hub. All rights reserved.</p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-white">Facebook</a>
+        <a href="#" class="hover:text-white">Twitter</a>
+        <a href="#" class="hover:text-white">Instagram</a>
+      </div>
+    </div>
+  </footer>
+<!-- Maintenance Modal -->
+<div id="maintenanceModal" 
+     class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+  <div class="bg-white rounded-xl shadow-lg max-w-md w-full p-8 text-center animate-fadeIn">
+    <h2 class="text-2xl font-bold text-red-600 mb-4">🚧 System Under Maintenance</h2>
+    <p class="text-gray-600 mb-6">
+      Please visit after some time. We’re working to serve you better.
+    </p>
+    <a href="index.html" 
+       class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+      Logout
+    </a>
+  </div>
+</div>
+
+<!-- Fade-in animation -->
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+  }
+</style>
+
+</body>
+</html>
