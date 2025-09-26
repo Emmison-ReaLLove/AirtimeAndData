@@ -7,26 +7,61 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fdfbfb, #ebedee);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Floating background animation */
+    .background-shapes div {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: float 10s infinite ease-in-out alternate;
+    }
+
+    .background-shapes div:nth-child(1) {
+      width: 200px; height: 200px;
+      background: #ffdd00;
+      top: 10%; left: 5%;
+      animation-delay: 0s;
+    }
+    .background-shapes div:nth-child(2) {
+      width: 300px; height: 300px;
+      background: #e60000;
+      bottom: 5%; right: 10%;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(40px); }
     }
 
     .container {
       text-align: center;
       background: #fff;
       padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      max-width: 420px;
       width: 90%;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       margin-bottom: 25px;
       color: #333;
     }
@@ -39,64 +74,80 @@
 
     .carrier-card {
       background: #f9f9f9;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+      border: 2px solid transparent;
     }
 
     .carrier-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    .carrier-card.active {
+      border: 2px solid #0077ff;
+      box-shadow: 0 8px 20px rgba(0,119,255,0.3);
     }
 
     .carrier-card img {
       width: 60px;
       height: auto;
+      margin-right: 15px;
     }
 
     .carrier-name {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-left: 15px;
-      flex-grow: 1;
-      text-align: left;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #444;
     }
 
     .btn {
       margin-top: 30px;
-      background: #0077ff;
+      background: linear-gradient(45deg, #0077ff, #00c6ff);
       color: #fff;
       padding: 12px 25px;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: transform 0.3s, background 0.3s;
       display: none;
     }
 
     .btn:hover {
-      background: #005fcc;
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #005fcc, #0099cc);
     }
   </style>
 </head>
 <body>
+  <!-- Floating background visuals -->
+  <div class="background-shapes">
+    <div></div>
+    <div></div>
+  </div>
+  <!-- Top Banner -->
+  <div class="w-full flex justify-center bg-white shadow-md py-4 mb-6">
+    <img src="your-generated-image.png" alt="Carrier Selection Banner" class="h-32 object-contain">
+  </div>
+
   <div class="container">
     <h1>Select Your Carrier</h1>
     <div class="carrier-option">
       <!-- MTN -->
-      <div class="carrier-card" onclick="selectCarrier('MTN')">
-        <img src="https://seeklogo.com/images/M/mtn-logo-46069AF3DE-seeklogo.com.png" alt="MTN Logo">
+      <div class="carrier-card" id="mtnCard" onclick="selectCarrier('MTN', 'mtnCard')">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAQlBMVEX///8AAADo6OgICAgfHx/19fXu7u7s7OzX19dgYGBoaGj4+PjQ0NBuYmJ2dnY5OTkYGBhISEgUFBSt9gSR4pkAAAC4ElEQVR4nO3b0ZKDMBRA0QhLQllvuP9fbQkRBwG4U6r1nq2T5T4oXus1yVVVVVVVVVVVVVVVVVVVVVVVf9rtFllLKvF8n1vB5nv4NsP4uLte8trJcr9oS9W+o5z9ytLyYLUuI7VHiVtYwrIzT7cIlUsrtmzKQtRuvJXbp3lcc6n+fVv69h3eOa5fovrE8Lt7K9O6TUMU0yZ1Tp8aH+cyHgvUgXSeD1ZObbPBqm/pM7flXmNYQ4qE58dZX+7U9Us81DC8OaE/lTDuLfwrPZ0TxkcfN3HpbL0jGq8Wl3k3XjhmMZda1h9Dn9TPpeNrlM0XHvbZzmjqcdPrzx25UfNce/yvJeO3/PulDf5W8/Va/wjzajAojlUdMTa1Vmr95AqMHLVQVUoHg5VMZ5UKQ6PVClOpz6Dwr2ZQbVVVVVVVVVVVVVVVVVVVVVVUf9wHKOmOT9QZoLAAAAAElFTkSuQmCC" alt="MTN Logo">
         <span class="carrier-name">MTN</span>
       </div>
 
       <!-- Vodafone -->
-      <div class="carrier-card" onclick="selectCarrier('Vodafone')">
-        <img src="https://seeklogo.com/images/V/vodafone-logo-6C1227414C-seeklogo.com.png" alt="Vodafone Logo">
+      <div class="carrier-card" id="vodafoneCard" onclick="selectCarrier('Vodafone', 'vodafoneCard')">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAQlBMVEUAAAD////x8fH09PTq6urj4+PZ2dnV1dXj4+OTk5M7OztRUVFOTk5JSUn7+/tzc3P19fWysrLZ2dn39/fk5OTg4OCtra2zs7PIx2eGAAABdUlEQVR4nO3a3Y6DIBAFYEjY9Nbe/1FlXbtIhiIxtCzt+9fqAuM24QQgiRJkiRJkiRJkiRJkiRJkiRJkoR4uqXq1E+X/1V5zM88k3nbfLW2h6+brtfXWLyLeuoNtrV28LbZsTV3Wnr7P47FtfPysmcR1c8Ou2+c7HbVfC8HVPDrtfrW7/Nz07jS9t27ZXD3Y2VY7Ld6L6TTB6OX8yy1XDfo1sBrD8rmtf5w84cVXXO98szPDTfy3NP80V9Vu8+ruN4vu63LxYfbjMvmL3N1X11NnvrM8OZ+6rL64O3tq5z1bhGeStP6huM85W62zK6vBuzWh6fQeMspp9jBvzB6jY0+wbqoKPc+KQkWn0qEJXr8qmNU9lQoTdQfZPCL+OrT5U9zHzFfUxZAAAAAAAAAAAAAAAAAA4McifLM5jChJ70AAAAASUVORK5CYII=" alt="Vodafone Logo">
         <span class="carrier-name">Vodafone</span>
       </div>
     </div>
@@ -107,15 +158,20 @@
   <script>
     let selectedCarrier = null;
 
-    function selectCarrier(carrier) {
+    function selectCarrier(carrier, cardId) {
       selectedCarrier = carrier;
       document.getElementById("continueBtn").style.display = "inline-block";
-      alert(carrier + " selected");
+
+      // remove active state from all
+      document.querySelectorAll(".carrier-card").forEach(card => {
+        card.classList.remove("active");
+      });
+      // add active to selected
+      document.getElementById(cardId).classList.add("active");
     }
 
     function goToRegister() {
       if (selectedCarrier) {
-        // Redirect to your registration page
         window.location.href = "register.html?carrier=" + selectedCarrier;
       }
     }
