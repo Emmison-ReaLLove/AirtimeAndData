@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Your Carrier</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    .carrier-option {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .carrier-card {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .carrier-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    .carrier-card img {
+      width: 60px;
+      height: auto;
+    }
+
+    .carrier-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-left: 15px;
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .btn {
+      margin-top: 30px;
+      background: #0077ff;
+      color: #fff;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: none;
+    }
+
+    .btn:hover {
+      background: #005fcc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Select Your Carrier</h1>
+    <div class="carrier-option">
+      <!-- MTN -->
+      <div class="carrier-card" onclick="selectCarrier('MTN')">
+        <img src="https://seeklogo.com/images/M/mtn-logo-46069AF3DE-seeklogo.com.png" alt="MTN Logo">
+        <span class="carrier-name">MTN</span>
+      </div>
+
+      <!-- Vodafone -->
+      <div class="carrier-card" onclick="selectCarrier('Vodafone')">
+        <img src="https://seeklogo.com/images/V/vodafone-logo-6C1227414C-seeklogo.com.png" alt="Vodafone Logo">
+        <span class="carrier-name">Vodafone</span>
+      </div>
+    </div>
+
+    <button class="btn" id="continueBtn" onclick="goToRegister()">Continue</button>
+  </div>
+
+  <script>
+    let selectedCarrier = null;
+
+    function selectCarrier(carrier) {
+      selectedCarrier = carrier;
+      document.getElementById("continueBtn").style.display = "inline-block";
+      alert(carrier + " selected");
+    }
+
+    function goToRegister() {
+      if (selectedCarrier) {
+        // Redirect to your registration page
+        window.location.href = "register.html?carrier=" + selectedCarrier;
+      }
+    }
+  </script>
+</body>
+</html>
