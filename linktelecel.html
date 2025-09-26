@@ -65,22 +65,22 @@ body::after {
     .card:hover {
       transform: translateY(-5px);
     }
-    .btn {
-      background: #FFD700;
-      color: #003366;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background: #e6c200;
-    }
-    .input-pin {
-      letter-spacing: 0.5rem;
-      font-size: 2rem;
-      text-align: center;
-      font-weight: bold;
-      border: 2px solid #E5E7EB;
-    }
+ .btn {
+  background: #FF0000; /* Bright red */
+  color: #ffffff; /* White text for contrast */
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.btn:hover {
+  background: #cc0000; /* Darker red on hover */
+}
+.input-pin {
+  letter-spacing: 0.5rem;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  border: 2px solid #E5E7EB;
+}
   </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-6">
@@ -95,15 +95,15 @@ body::after {
 
     <form id="pinForm" class="space-y-6">
       <input 
-        type="password" 
-        id="pinInput" 
-        maxlength="4" 
-        pattern="\d{4}" 
-        inputmode="numeric" 
-        class="input-pin w-full rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-yellow-400" 
-        placeholder="••••"
-        required
-      >
+  type="password" 
+  id="pinInput" 
+  maxlength="4" 
+  pattern="\d{4}" 
+  inputmode="numeric" 
+  class="input-pin w-full rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-500" 
+  placeholder="••••"
+  required
+>
 
       <button 
         type="submit"
