@@ -12,7 +12,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
     }
 
@@ -65,7 +65,7 @@
       position: relative;
       z-index: 2;
       animation: fadeIn 1.2s ease-in-out;
-      margin-top: -60px; /* overlaps banner slightly */
+      margin: -60px auto 40px auto;
     }
 
     @keyframes fadeIn {
@@ -136,6 +136,14 @@
       transform: scale(1.05);
       background: linear-gradient(45deg, #005fcc, #0099cc);
     }
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: auto;
+      background: #f0f0f0;
+      }
   </style>
 </head>
 <body>
@@ -166,7 +174,9 @@
 
     <button class="btn" id="continueBtn" onclick="goToRegister()">Continue</button>
   </div>
-
+  <footer>
+    &copy; 2025 Airtime & Data. All rights reserved.
+  </footer>
   <script>
     let selectedCarrier = null;
 
