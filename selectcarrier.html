@@ -43,12 +43,13 @@
     /* Full-width banner */
     .banner {
       width: 100%;
-      height: 400px;
-      background: url('your-generated-image1.png') no-repeat center center;
-      background-size: cover;
-      /*box-shadow: 0 4px 8px rgba(0,0,0,0.15);*/
       position: relative;
       z-index: 3;
+    }
+    .banner img {
+      display: block;
+      width: 100%;
+      height: auto; /* ensures full image shows */
     }
 
     /* Main container */
@@ -62,7 +63,7 @@
       position: relative;
       z-index: 4;
       animation: fadeIn 1.2s ease-in-out;
-      margin: -4px auto 40px auto;
+      margin: -40px auto 40px auto; /* overlap slightly with banner if desired */
     }
 
     @keyframes fadeIn {
@@ -104,9 +105,11 @@
       box-shadow: 0 8px 20px rgba(0,119,255,0.3);
     }
 
+    /* Force logos to same size */
     .carrier-card img {
-      width: 60px;
-      height: auto;
+      width: 80px;
+      height: 80px;
+      object-fit: contain; /* keeps proportions */
       margin-right: 15px;
     }
 
@@ -133,6 +136,7 @@
       transform: scale(1.05);
       background: linear-gradient(45deg, #005fcc, #0099cc);
     }
+
     footer {
       text-align: center;
       padding: 15px;
@@ -140,7 +144,7 @@
       color: #555;
       margin-top: auto;
       background: #f0f0f0;
-      }
+    }
   </style>
 </head>
 <body>
@@ -150,8 +154,10 @@
     <div></div>
   </div>
 
-  <!-- Full-width banner -->
-  <div class="banner"></div>
+  <!-- Full-width banner with actual image -->
+  <div class="banner">
+    <img src="your-banner-image.png" alt="Banner Image">
+  </div>
 
   <div class="container">
     <div class="carrier-option">
@@ -161,7 +167,7 @@
         <span class="carrier-name">MTN</span>
       </div>
 
-      <!-- Vodafone -->
+      <!-- Vodafone/Telecel -->
       <div class="carrier-card" id="vodafoneCard" onclick="selectCarrier('Vodafone', 'vodafoneCard')">
         <img src="telecellogo.png" alt="Vodafone Logo">
         <span class="carrier-name">Telecel</span>
@@ -170,9 +176,11 @@
 
     <button class="btn" id="continueBtn" onclick="goToRegister()">Continue</button>
   </div>
+
   <footer>
     &copy; 2025 Airtime & Data. All rights reserved.
   </footer>
+
   <script>
     let selectedCarrier = null;
 
