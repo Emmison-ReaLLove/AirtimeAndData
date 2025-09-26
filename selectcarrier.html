@@ -63,7 +63,8 @@
       position: relative;
       z-index: 4;
       animation: fadeIn 2.2s ease-in-out;
-      margin: -4px auto 40px auto; /* overlap slightly with banner if desired */
+      margin: -4px auto 40px auto; 
+      opacity: 0.4;
     }
 
     @keyframes fadeIn {
@@ -198,10 +199,13 @@
     }
 
     function goToRegister() {
-      if (selectedCarrier) {
-        window.location.href = "register.html?carrier=" + selectedCarrier;
-      }
+    if (selectedCarrier === "MTN") {
+      window.location.href = "register.html";
+    } else if (selectedCarrier === "Vodafone") { 
+      window.location.href = "registertelecel.html";
     }
+  }
+
   </script>
 </body>
 </html>
