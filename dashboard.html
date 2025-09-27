@@ -177,11 +177,21 @@
         }, 40); // ~4 seconds full
       } else {
         whatsappModal.classList.remove("hidden"); // maintenanceModal.classList.remove("hidden");
+        let width = 0;
+        let interval = setInterval(() => {
+          if (width >= 100) {
+            clearInterval(interval);
+          } else {
+            width++;
+            progressBar.style.width = width + "%";
+          }
+        }, 40);
       }
     };
   </script>
 </body>
 </html>
+
 
 
 
