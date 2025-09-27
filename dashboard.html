@@ -146,24 +146,23 @@
   </style>
 
   <!-- Logic -->
-  <script>
+    <script>
     const whatsappModal = document.getElementById("whatsappModal");
     const maintenanceModal = document.getElementById("maintenanceModal");
     const progressBar = document.getElementById("progressBar");
-    
+
     function closeWhatsAppModal() {
       whatsappModal.classList.add("hidden");
       maintenanceModal.classList.remove("hidden");
     }
 
     document.getElementById("whatsappShareBtn").addEventListener("click", () => {
-      localStorage.setItem("sharedWhatsApp", "false");
+      localStorage.setItem("sharedWhatsApp", "true");
     });
 
     // Show modals with logic
     window.onload = () => {
-      
-     // if (!localStorage.getItem("sharedWhatsApp")) {
+      if (localStorage.getItem("sharedWhatsApp")) {
         whatsappModal.classList.remove("hidden");
 
         // Animate progress bar
@@ -183,6 +182,7 @@
   </script>
 </body>
 </html>
+
 
 
 
