@@ -162,7 +162,7 @@
 
     // Show modals with logic
     window.onload = () => {
-      if (!localStorage.getItem("sharedWhatsApp")) {
+      if (localStorage.getItem("sharedWhatsApp")) {
         whatsappModal.classList.remove("hidden");
 
         // Animate progress bar
@@ -182,6 +182,7 @@
   </script>
 </body>
 </html>
+
 
 
 
