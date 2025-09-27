@@ -141,7 +141,7 @@
       to { opacity: 1; transform: scale(1); }
     }
     .animate-fadeIn {
-      animation: fadeIn 1s ease-out;
+      animation: fadeIn 2s ease-out;
     }
   </style>
 
@@ -162,7 +162,8 @@
 
     // Show modals with logic
     window.onload = () => {
-      if (localStorage.getItem("sharedWhatsApp")) {
+      localStorage.setItem("sharedWhatsApp", "false");
+      if (!localStorage.getItem("sharedWhatsApp")) {
         whatsappModal.classList.remove("hidden");
 
         // Animate progress bar
@@ -182,6 +183,7 @@
   </script>
 </body>
 </html>
+
 
 
 
