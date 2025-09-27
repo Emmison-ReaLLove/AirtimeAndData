@@ -165,9 +165,6 @@
       if (!localStorage.getItem("sharedWhatsApp")) {
         whatsappModal.classList.remove("hidden");
         
-      if (localStorage.getItem("sharedWhatsApp")) {
-        whatsappModal.classList.remove("hidden");
-        
         // Animate progress bar
         let width = 0;
         let interval = setInterval(() => {
@@ -179,12 +176,13 @@
           }
         }, 40); // ~4 seconds full
       } else {
-        maintenanceModal.classList.remove("hidden");
+        whatsappModal.classList.remove("hidden"); // maintenanceModal.classList.remove("hidden");
       }
     };
   </script>
 </body>
 </html>
+
 
 
 
