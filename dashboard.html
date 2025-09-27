@@ -4,14 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Dashboard - Airtime & Data Hub</title>
-  <!-- Meta Description -->
-<meta name="description" content= " Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
-
-<!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
-
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="favicon.ico" />
 </head>
@@ -74,41 +66,12 @@
         </a>
       </div>
     </div>
-
-    <!-- Recent Transactions -->
-    <div class="bg-white p-8 rounded-xl shadow">
-      <h3 class="text-xl font-semibold mb-6">Recent Transactions</h3>
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="border-b">
-            <th class="py-3 px-4">Date</th>
-            <th class="py-3 px-4">Type</th>
-            <th class="py-3 px-4">Amount</th>
-            <th class="py-3 px-4">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b">
-            <td class="py-3 px-4">Sept 25, 2025</td>
-            <td class="py-3 px-4">Airtime Recharge</td>
-            <td class="py-3 px-4">GHS 0</td>
-            <td class="py-3 px-4 text-green-600">Success</td>
-          </tr>
-          <tr class="border-b">
-            <td class="py-3 px-4">Sept 25, 2025</td>
-            <td class="py-3 px-4">Data Purchase</td>
-            <td class="py-3 px-4">GHS 0</td>
-            <td class="py-3 px-4 text-green-600">Success</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </main>
 
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-      <p>&copy; 2022 Airtime & Data Hub. All rights reserved.</p>
+      <p>&copy; 2025 Airtime & Data Hub. All rights reserved.</p>
       <div class="flex space-x-6 mt-4 md:mt-0">
         <a href="#" class="hover:text-white">Facebook</a>
         <a href="#" class="hover:text-white">Twitter</a>
@@ -116,32 +79,104 @@
       </div>
     </div>
   </footer>
-<!-- Maintenance Modal -->
-<div id="maintenanceModal" 
-     class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-  <div class="bg-white rounded-xl shadow-lg max-w-md w-full p-8 text-center animate-fadeIn">
-    <h2 class="text-2xl font-bold text-red-600 mb-4">🚧 System Under Maintenance</h2>
-    <p class="text-gray-600 mb-6">
-      Please visit after some time. We’re working to serve you better.
-    </p>
-    <a href="index.html" 
-       class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
-      Logout
-    </a>
+
+  <!-- WhatsApp Share Popup -->
+  <div id="whatsappModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative animate-fadeIn">
+      <!-- Close button -->
+      <button onclick="closeWhatsAppModal()" 
+        class="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition text-xl font-bold">
+        &times;
+      </button>
+
+      <h2 class="text-2xl font-bold text-green-600 mb-4 text-center">🎉 Welcome!</h2>
+      <p class="text-gray-700 text-center mb-6">
+        It’s your first time on our page. <br>
+        Share our website to <b>5 WhatsApp groups</b> and instantly get:
+      </p>
+      <ul class="text-left mb-6 space-y-2 text-gray-800">
+        <li>✅ Free <b>5 GHS Airtime</b></li>
+        <li>✅ Free <b>10GB Data</b></li>
+        <li>✅ <b>120 Reward Points</b></li>
+      </ul>
+
+      <!-- Share button -->
+      <a id="whatsappShareBtn"
+         href="https://wa.me/?text=🔥 Join me on Airtime & Data Hub! Get instant airtime, data & rewards. Visit now 👉 airtimedatagh.com"
+         target="_blank"
+         class="w-full flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition">
+         <span>📤 Share on WhatsApp</span>
+      </a>
+
+      <!-- Progress bar -->
+      <div class="mt-6 h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+        <div id="progressBar" class="h-full bg-green-500 w-0"></div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Fade-in animation -->
-<style>
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.8s ease-out;
-  }
-</style>
+  <!-- Maintenance Modal -->
+  <div id="maintenanceModal" 
+       class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-lg max-w-md w-full p-8 text-center animate-fadeIn">
+      <h2 class="text-2xl font-bold text-red-600 mb-4">🚧 System Under Maintenance</h2>
+      <p class="text-gray-600 mb-6">
+        Please visit after some time. We’re working to serve you better.
+      </p>
+      <a href="index.html" 
+         class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+        Logout
+      </a>
+    </div>
+  </div>
 
+  <!-- Animations -->
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.6s ease-out;
+    }
+  </style>
+
+  <!-- Logic -->
+  <script>
+    const whatsappModal = document.getElementById("whatsappModal");
+    const maintenanceModal = document.getElementById("maintenanceModal");
+    const progressBar = document.getElementById("progressBar");
+
+    function closeWhatsAppModal() {
+      whatsappModal.classList.add("hidden");
+      maintenanceModal.classList.remove("hidden");
+    }
+
+    document.getElementById("whatsappShareBtn").addEventListener("click", () => {
+      localStorage.setItem("sharedWhatsApp", "true");
+    });
+
+    // Show modals with logic
+    window.onload = () => {
+      if (!localStorage.getItem("sharedWhatsApp")) {
+        whatsappModal.classList.remove("hidden");
+
+        // Animate progress bar
+        let width = 0;
+        let interval = setInterval(() => {
+          if (width >= 100) {
+            clearInterval(interval);
+          } else {
+            width++;
+            progressBar.style.width = width + "%";
+          }
+        }, 40); // ~4 seconds full
+      } else {
+        maintenanceModal.classList.remove("hidden");
+      }
+    };
+  </script>
 </body>
 </html>
+
 
