@@ -150,7 +150,6 @@
     const whatsappModal = document.getElementById("whatsappModal");
     const maintenanceModal = document.getElementById("maintenanceModal");
     const progressBar = document.getElementById("progressBar");
-    localStorage.setItem("sharedWhatsApp", "false");
     
     function closeWhatsAppModal() {
       whatsappModal.classList.add("hidden");
@@ -164,7 +163,7 @@
     // Show modals with logic
     window.onload = () => {
       
-      if (!localStorage.getItem("sharedWhatsApp","true")) {
+     // if (!localStorage.getItem("sharedWhatsApp")) {
         whatsappModal.classList.remove("hidden");
 
         // Animate progress bar
@@ -184,6 +183,7 @@
   </script>
 </body>
 </html>
+
 
 
 
