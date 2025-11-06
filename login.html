@@ -23,7 +23,7 @@
       <div>
         <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
         <input type="tel" id="phone" name="phone" required
-          placeholder="e.g. 241234567"
+          placeholder="e.g. +233241234567"
           class="mt-1 block w-full px-4 py-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
       </div>
 
@@ -51,11 +51,40 @@
   </div>
 
   <script>
+    // Show maintenance message on submit
     document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Stop form submission
+      event.preventDefault();
       const msg = document.getElementById("message");
-      msg.classList.remove("hidden"); // Show maintenance message
+      msg.classList.remove("hidden");
+    });
+
+    const phoneInput = document.getElementById("phone");
+
+    // Allow only numbers and '+'
+    phoneInput.addEventListener("input", function() {
+      let cleaned = phoneInput.value.replace(/[^\d+]/g, ''); // Remove everything except digits and '+'
+      // Prevent multiple '+' signs
+      if ((cleaned.match(/\+/g) || []).length > 1) {
+        cleaned = cleaned.replace(/\+/g, '');
+      }
+      // '+' can only be at the start
+      if (cleaned.includes('+') && !cleaned.startsWith('+')) {
+        cleaned = cleaned.replace(/\+/g, '');
+      }
+      phoneInput.value = cleaned;
+    });
+
+    // Auto-format Ghana phone numbers
+    phoneInput.addEventListener("blur", function() {
+      let value = phoneInput.value.trim();
+      if (value.startsWith("0") && value.length === 10) {
+        value = "+233" + value.substring(1);
+      } else if (value.startsWith("233")) {
+        value = "+" + value;
+      }
+      phoneInput.value = value;
     });
   </script>
 </body>
 </html>
+
