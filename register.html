@@ -229,7 +229,7 @@
     const resendBtn = document.getElementById("resendBtn");
     const timerEl = document.getElementById("timer");
     const notification = document.getElementById("notification");
-    let countdown, timeLeft = 15;
+    let countdown, timeLeft = 20;
 
     function showNotification(message, type = "success") {
       notification.textContent = message;
@@ -241,7 +241,7 @@
     }
 
     function startTimer() {
-      timeLeft = 15;
+      timeLeft = 20;
       timerEl.textContent = timeLeft + "s";
       resendBtn.classList.add("hidden");
       countdown = setInterval(() => {
@@ -359,6 +359,7 @@ function unlockResend() {
   </script>
 </body>
 </html>
+
 
 
 
