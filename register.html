@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Airtime & Data | Register</title>
+
   <meta name="description" content="Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
 
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <link rel="icon" href="favicon.png" type="image/png">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -20,94 +18,67 @@
   </script>
 
   <style>
-    /* ===== Preloader ===== */
+    /* ===== PRELOADER ===== */
     #preloader {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       background: linear-gradient(135deg, #002b5c, #004b8d);
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       flex-direction: column;
       z-index: 9999;
-      transition: opacity 0.8s ease;
-    }
-    #preloader.hidden {
-      opacity: 0;
-      pointer-events: none;
+      color: white;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
     }
     .loader {
-      width: 80px;
-      height: 80px;
-      border: 6px solid rgba(255, 215, 0, 0.3);
-      border-top-color: gold;
+      border: 4px solid rgba(255, 215, 0, 0.2);
+      border-top: 4px solid gold;
       border-radius: 50%;
-      animation: spin 1.2s linear infinite, glow 2s ease-in-out infinite alternate;
+      width: 60px;
+      height: 60px;
+      animation: spin 1.2s linear infinite;
+      margin-bottom: 15px;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    @keyframes glow {
-      from { box-shadow: 0 0 10px gold; }
-      to { box-shadow: 0 0 25px gold; }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ===== Background ===== */
+    /* ===== BACKGROUND ===== */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #002b5c, #004b8d);
+      background: linear-gradient(135deg, #003366, #0055a5);
+      overflow: hidden;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      overflow: hidden;
+      justify-content: center;
       position: relative;
     }
 
-    /* Floating gold particles */
+    /* ===== GOLD FLOATING PARTICLES ===== */
     .particle {
       position: absolute;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.9), rgba(255, 215, 0, 0));
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,215,0,0.8), transparent);
-      animation: float 8s ease-in-out infinite;
-      opacity: 0.5;
-    }
-    .particle:nth-child(1) { width: 8px; height: 8px; top: 10%; left: 20%; animation-delay: 0s; }
-    .particle:nth-child(2) { width: 10px; height: 10px; top: 50%; left: 10%; animation-delay: 2s; }
-    .particle:nth-child(3) { width: 6px; height: 6px; top: 70%; left: 80%; animation-delay: 4s; }
-    .particle:nth-child(4) { width: 12px; height: 12px; top: 30%; left: 70%; animation-delay: 1s; }
-    .particle:nth-child(5) { width: 9px; height: 9px; top: 80%; left: 40%; animation-delay: 3s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); opacity: 0.5; }
-      50% { transform: translateY(-20px); opacity: 1; }
+      opacity: 0.8;
+      animation: floatUp 10s linear infinite;
     }
 
-    /* ===== Card animation ===== */
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      50% { transform: translateY(-60px) scale(1.1); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 0.8; }
+    }
+
+    /* ===== FORM CARD ===== */
     .fade-in-up {
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(30px);
       animation: fadeUp 1.2s ease forwards;
     }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* ===== Bouncing logo ===== */
-    .bounce {
-      animation: bounce 3s ease-in-out infinite, goldGlow 2.5s ease-in-out infinite alternate;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-    @keyframes goldGlow {
-      0% { filter: drop-shadow(0 0 3px gold) drop-shadow(0 0 6px rgba(255,215,0,0.6)); }
-      100% { filter: drop-shadow(0 0 10px gold) drop-shadow(0 0 20px rgba(255,215,0,1)); }
-    }
-
-    /* ===== Buttons and inputs ===== */
     .form-input {
       border: 2px solid #dbeafe;
       border-radius: 0.75rem;
@@ -116,12 +87,13 @@
     }
     .form-input:focus {
       border-color: gold;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
       outline: none;
     }
+
     .btn {
       background: gold;
-      color: #002b5c;
+      color: #003366;
       font-weight: bold;
       transition: all 0.3s ease;
     }
@@ -130,26 +102,51 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
     }
+
+    /* ===== NOTIFICATION ===== */
+    #notification {
+      transition: opacity 0.5s ease, transform 0.3s ease;
+    }
+
+    /* ===== BOUNCING IMAGE ===== */
+    .bounce {
+      animation: bounce 3s ease-in-out infinite, glow 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 4px #ffd700); }
+      100% { filter: drop-shadow(0 0 20px gold); }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Preloader -->
+  <!-- PRELOADER -->
   <div id="preloader">
     <div class="loader"></div>
-    <p style="color: gold; font-weight: bold; margin-top: 12px;">Setting up...</p>
+    <span>Setting up...</span>
   </div>
 
-  <!-- Gold Floating Particles -->
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
+  <!-- GOLD PARTICLES (20 floating lights) -->
+  <script>
+    for (let i = 0; i < 20; i++) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      particle.style.width = Math.random() * 8 + 4 + "px";
+      particle.style.height = particle.style.width;
+      particle.style.top = Math.random() * 100 + "%";
+      particle.style.left = Math.random() * 100 + "%";
+      particle.style.animationDelay = Math.random() * 10 + "s";
+      document.body.appendChild(particle);
+    }
+  </script>
 
   <!-- Main Content -->
   <div class="fade-in-up flex items-center justify-center w-full px-4 hidden" id="mainContent">
-    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-blue-100">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-blue-100 relative z-10">
       <h2 class="text-3xl font-bold text-blue-700 text-center mb-6">Create An Account</h2>
 
       <form id="registerForm" class="space-y-5">
@@ -170,7 +167,9 @@
           <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
           <div class="relative">
             <input type="password" id="password" required placeholder="Enter password" class="w-full form-input pr-10">
-            <button type="button" id="togglePassword" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600">👁</button>
+            <button type="button" id="togglePassword" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600">
+              👁
+            </button>
           </div>
         </div>
 
@@ -200,16 +199,15 @@
   <div id="notification" class="fixed top-5 right-5 hidden px-4 py-3 rounded-xl shadow-lg text-white font-medium"></div>
 
   <script>
-    // Preloader
+    // PRELOADER
     window.addEventListener("load", () => {
-      const preloader = document.getElementById("preloader");
       setTimeout(() => {
-        preloader.classList.add("hidden");
+        document.getElementById("preloader").style.display = "none";
         document.getElementById("mainContent").classList.remove("hidden");
-      }, 1800);
+      }, 1500);
     });
 
-    // Password toggle
+    // PASSWORD TOGGLE
     const togglePassword = document.getElementById("togglePassword");
     const passwordField = document.getElementById("password");
     togglePassword.addEventListener("click", () => {
@@ -218,7 +216,7 @@
       togglePassword.textContent = type === "password" ? "👁" : "🙈";
     });
 
-    // OTP logic
+    // FORM LOGIC
     const registerForm = document.getElementById("registerForm");
     const otpModal = document.getElementById("otpModal");
     const otpInput = document.getElementById("otpInput");
@@ -226,7 +224,6 @@
     const resendBtn = document.getElementById("resendBtn");
     const timerEl = document.getElementById("timer");
     const notification = document.getElementById("notification");
-
     let countdown, timeLeft = 30;
 
     function showNotification(message, type = "success") {
@@ -253,7 +250,7 @@
       }, 1000);
     }
 
-    registerForm.addEventListener("submit", function(e){
+    registerForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const phone = document.getElementById("phone").value;
       const password = passwordField.value;
@@ -272,7 +269,7 @@
       });
     });
 
-    verifyBtn.addEventListener("click", function(){
+    verifyBtn.addEventListener("click", () => {
       const otp = otpInput.value;
       if (otp.length === 6) {
         const phone = localStorage.getItem("userPhone");
@@ -292,7 +289,7 @@
       }
     });
 
-    resendBtn.addEventListener("click", function(){
+    resendBtn.addEventListener("click", () => {
       otpInput.value = "";
       showNotification("Code resent. Please check your SMS.");
       startTimer();
