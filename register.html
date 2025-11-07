@@ -120,6 +120,11 @@
       0% { filter: drop-shadow(0 0 4px #ffd700); }
       100% { filter: drop-shadow(0 0 20px gold); }
     }
+
+    #timer.cooldown {
+  color: red !important;
+  font-weight: bold;
+}
   </style>
 </head>
 
@@ -289,13 +294,71 @@
       }
     });
 
-    resendBtn.addEventListener("click", () => {
-      otpInput.value = "";
-      showNotification("Code resent. Please check your SMS.");
-      startTimer();
-    });
+
+    // ===== LIMIT RESEND RETRIES WITH 5-MIN COOLDOWN + LIVE COUNTDOWN =====
+let retryCount = 0;
+const maxRetries = 4;
+const cooldownTime = 5 * 60 * 1000; // 5 minutes in ms
+let cooldownTimer; // store countdown interval
+
+resendBtn.addEventListener("click", () => {
+  retryCount++;
+
+  // If user exceeded retry limit
+  if (retryCount > maxRetries) {
+    showNotification("Too many attempts! Please try again later.", "error");
+
+    resendBtn.disabled = true;
+    otpInput.disabled = true;
+    verifyBtn.disabled = true;
+    resendBtn.classList.add("opacity-50", "cursor-not-allowed");
+    verifyBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+    let remaining = cooldownTime / 1000; // in seconds
+    updateCountdownText(remaining);
+
+    // Countdown display
+    cooldownTimer = setInterval(() => {
+      remaining--;
+      updateCountdownText(remaining);
+
+      if (remaining <= 0) {
+        clearInterval(cooldownTimer);
+        unlockResend();
+      }
+    }, 1000);
+
+    return;
+  }
+
+  // Normal resend behavior
+  otpInput.value = "";
+  showNotification(`Code resent (${retryCount}/${maxRetries}). Please check your SMS.`);
+  startTimer();
+});
+
+// === Helper: update countdown text ===
+function updateCountdownText(seconds) {
+  timerEl.classList.add("cooldown");
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  timerEl.textContent = `Try again in ${m}:${s < 10 ? "0" + s : s}`;
+}
+
+function unlockResend() {
+  retryCount = 0;
+  resendBtn.disabled = false;
+  otpInput.disabled = false;
+  verifyBtn.disabled = false;
+  resendBtn.classList.remove("opacity-50", "cursor-not-allowed");
+  verifyBtn.classList.remove("opacity-50", "cursor-not-allowed");
+  timerEl.textContent = "";
+  timerEl.classList.remove("cooldown");
+  showNotification("You can now request a new code.", "success");
+}
   </script>
 </body>
 </html>
+
 
 
