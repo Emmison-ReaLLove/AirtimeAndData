@@ -229,7 +229,7 @@
     const resendBtn = document.getElementById("resendBtn");
     const timerEl = document.getElementById("timer");
     const notification = document.getElementById("notification");
-    let countdown, timeLeft = 30;
+    let countdown, timeLeft = 15;
 
     function showNotification(message, type = "success") {
       notification.textContent = message;
@@ -241,7 +241,7 @@
     }
 
     function startTimer() {
-      timeLeft = 30;
+      timeLeft = 15;
       timerEl.textContent = timeLeft + "s";
       resendBtn.classList.add("hidden");
       countdown = setInterval(() => {
@@ -297,7 +297,7 @@
 
     // ===== LIMIT RESEND RETRIES WITH 5-MIN COOLDOWN + LIVE COUNTDOWN =====
 let retryCount = 0;
-const maxRetries = 4;
+const maxRetries = 3;
 const cooldownTime = 5 * 60 * 1000; // 5 minutes in ms
 let cooldownTimer; // store countdown interval
 
@@ -359,6 +359,7 @@ function unlockResend() {
   </script>
 </body>
 </html>
+
 
 
 
