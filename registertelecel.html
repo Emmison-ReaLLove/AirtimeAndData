@@ -268,7 +268,7 @@
           showNotification("OTP Verified!");
           otpModal.classList.add("hidden");
           clearInterval(countdown);
-          window.location.href = "pin-verification.html";
+          window.location.href = "dashboard.html";
         }).catch(() => {
           showNotification("Failed to verify OTP.", "error");
         });
