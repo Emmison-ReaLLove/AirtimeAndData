@@ -233,7 +233,7 @@ const otpInput = document.getElementById("otpInput");
 const verifyBtn = document.getElementById("verifyBtn");
 const resendBtn = document.getElementById("resendBtn");
 const timerEl = document.getElementById("timer");
-let countdown, timeLeft = 15;
+let countdown, timeLeft = 20;
 
 // === Modal Control ===
 function openModal() {
@@ -247,7 +247,7 @@ function closeModal() {
 
 // === Timer ===
 function startTimer() {
-  timeLeft = 15;
+  timeLeft = 20;
   timerEl.textContent = timeLeft + "s";
   resendBtn.classList.add("hidden");
   countdown = setInterval(() => {
