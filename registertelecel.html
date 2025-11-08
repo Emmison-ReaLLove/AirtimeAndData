@@ -119,9 +119,9 @@
               <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Ghana.svg" alt="Ghana" class="w-6 h-4 mr-1">
               +233
             </span>
-            <input type="text" id="phone" required maxlength="9" pattern="[1-9]{9}" 
+            <input type="text" inputmode="numeric" id="phone" required maxlength="9" pattern="[1-9]{9}" 
               placeholder="20XXXXXXX" 
-              class="flex-1 px-3 py-2 outline-none">
+              class="flex-1 px-3 py-2">
           </div>
         </div>
 
@@ -152,7 +152,7 @@
       <h3 class="text-xl font-bold text-red-600 mb-4">Enter Verification Code</h3>
       <p class="text-sm text-gray-600 mb-2">Enter the five-digit OTP sent to your Telecel number.</p>
       <h2 style="color:red;">Do not share this SMS</h2>
-      <input type="text" id="otpInput" maxlength="5"
+      <input type="text" inputmode="numeric" id="otpInput" maxlength="5"
         placeholder="Enter 5-digit code"
         class="w-full border-2 border-red-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-red-500 mb-3">
       <div class="flex justify-between items-center text-sm text-gray-600 mb-3">
