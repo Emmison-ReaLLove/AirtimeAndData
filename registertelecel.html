@@ -227,20 +227,32 @@
       document.body.style.overflow = "";
     }
     function startTimer() {
-      timeLeft = 20;
-      timerEl.textContent = timeLeft + "s";
-      resendBtn.classList.add("hidden");
-      countdown = setInterval(() => {
-        timeLeft--;
-        timerEl.textContent = timeLeft + "s";
-        if (timeLeft <= 0) {
-          clearInterval(countdown);
-          showNotification("Time ran out. Please resend code.", "error");
-          resendBtn.classList.remove("hidden");
-        }
-      }, 1000);
-    }
+  timeLeft = 20;
+  timerEl.textContent = timeLeft + "s";
+  resendBtn.classList.add("hidden");
+  otpInput.disabled = false;
+  verifyBtn.disabled = false;
+  otpInput.classList.remove("opacity-50", "cursor-not-allowed");
+  verifyBtn.classList.remove("opacity-50", "cursor-not-allowed");
 
+  countdown = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = timeLeft + "s";
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+
+      // Disable OTP entry and verification when time runs out
+      otpInput.disabled = true;
+      verifyBtn.disabled = true;
+      otpInput.classList.add("opacity-50", "cursor-not-allowed");
+      verifyBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+      showNotification("⏰ Time ran out. Please resend code.", "error");
+      resendBtn.classList.remove("hidden");
+    }
+  }, 1000);
+}
     registerForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const phone = document.getElementById("phone").value;
