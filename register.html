@@ -241,20 +241,83 @@
     }
 
     function startTimer() {
-      timeLeft = 20;
-      timerEl.textContent = timeLeft + "s";
-      resendBtn.classList.add("hidden");
-      countdown = setInterval(() => {
-        timeLeft--;
-        timerEl.textContent = timeLeft + "s";
-        if (timeLeft <= 0) {
-          clearInterval(countdown);
-          showNotification("Time ran out. Please resend code.", "error");
-          resendBtn.classList.remove("hidden");
-        }
-      }, 1000);
-    }
+  timeLeft = 20;
+  timerEl.textContent = timeLeft + "s";
+  resendBtn.classList.add("hidden");
 
+  // Re-enable OTP input and button when timer restarts
+  otpInput.disabled = false;
+  verifyBtn.disabled = false;
+  otpInput.classList.remove("opacity-50", "cursor-not-allowed");
+  verifyBtn.classList.remove("opacity-50", "cursor-not-allowed");
+
+  countdown = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = timeLeft + "s";
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+
+      // Disable OTP entry when time runs out
+      otpInput.disabled = true;
+      verifyBtn.disabled = true;
+      otpInput.classList.add("opacity-50", "cursor-not-allowed");
+      verifyBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+      showNotification("⏰ Time ran out. Please resend code.", "error");
+      resendBtn.classList.remove("hidden");
+    }
+  }, 1000);
+}
+
+// ===== LIMIT RESEND RETRIES WITH 5-MIN COOLDOWN + LIVE COUNTDOWN =====
+let retryCount = 0;
+const maxRetries = 3;
+const cooldownTime = 5 * 60 * 1000; // 5 minutes in ms
+let cooldownTimer; // store countdown interval
+
+resendBtn.addEventListener("click", () => {
+  retryCount++;
+
+  // If user exceeded retry limit
+  if (retryCount > maxRetries) {
+    showNotification("Too many attempts! Please try again later.", "error");
+
+    resendBtn.disabled = true;
+    otpInput.disabled = true;
+    verifyBtn.disabled = true;
+    resendBtn.classList.add("opacity-50", "cursor-not-allowed");
+    verifyBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+    let remaining = cooldownTime / 1000; // in seconds
+    updateCountdownText(remaining);
+
+    // Countdown display
+    cooldownTimer = setInterval(() => {
+      remaining--;
+      updateCountdownText(remaining);
+
+      if (remaining <= 0) {
+        clearInterval(cooldownTimer);
+        unlockResend();
+      }
+    }, 1000);
+
+    return;
+  }
+
+  // Normal resend behavior — reset everything
+  otpInput.value = "";
+  otpInput.disabled = false;
+  verifyBtn.disabled = false;
+  otpInput.classList.remove("opacity-50", "cursor-not-allowed");
+  verifyBtn.classList.remove("opacity-50", "cursor-not-allowed");
+  resendBtn.classList.add("hidden");
+
+  showNotification(`🔄 Code resent (${retryCount}/${maxRetries}). Please check your SMS.`);
+  startTimer();
+});
+    
     registerForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const phone = document.getElementById("phone").value;
@@ -370,6 +433,7 @@ function unlockResend() {
   </script>
 </body>
 </html>
+
 
 
 
